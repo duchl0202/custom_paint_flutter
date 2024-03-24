@@ -1,0 +1,84 @@
+Ngày 1: Cơ bản về Animation trong Flutter
+Bài thực hành: Tạo một FloatingActionButton nhấp nháy.
+
+Hãy sử dụng AnimationController để điều khiển animation.
+Sử dụng Opacity widget và thay đổi giá trị độ trong suốt từ 0.0 đến 1.0 để tạo hiệu ứng nhấp nháy.
+Ngày 2: Sâu hơn với Animation
+Bài thực hành: Tạo một hình tròn di chuyển qua lại trên màn hình.
+
+Sử dụng Tween để thay đổi vị trí của hình tròn từ điểm này sang điểm khác.
+Áp dụng Curve để làm cho chuyển động mượt mà và tự nhiên hơn.
+Ngày 3: Khám phá Custom Paint
+Bài thực hành: Vẽ một bông hoa sử dụng CustomPainter.
+
+Sử dụng Path để tạo ra các cánh hoa.
+Vẽ hình tròn ở giữa làm nhụy hoa.
+Ngày 4: Làm việc với Transform và Matrix4
+Bài thực hành: Tạo một widget chứa hình ảnh và áp dụng biến đổi perspective 3D khi người dùng nhấn giữ.
+
+Sử dụng GestureDetector để xác định khi nào người dùng nhấn giữ.
+Áp dụng Matrix4 để tạo hiệu ứng perspective 3D.
+Ngày 5: Kết hợp Animation với Custom Paint và Transform
+Bài thực hành: Tạo một đồng hồ đếm ngược với kim đồng hồ xoay.
+
+Sử dụng CustomPainter để vẽ đồng hồ.
+Áp dụng animation để kim đồng hồ xoay theo thời gian thực.
+Ngày 6: Phát triển Dự án Mini
+Bài thực hành: Xây dựng một trò chơi đơn giản "Tránh chướng ngại vật".
+
+Vẽ chướng ngại vật và nhân vật sử dụng CustomPaint.
+Sử dụng Transform và Animation để di chuyển nhân vật và chướng ngại vật.
+Điều khiển nhân vật nhảy qua chướng ngại vật bằng cách nhấn một nút.
+Ngày 7: Hoàn thiện và Tối ưu Dự án
+Bài thực hành: Tối ưu hóa và chuẩn bị trình bày dự án trò chơi.
+
+Kiểm tra hiệu suất và tối ưu hóa animation để trò chơi chạy mượt trên các thiết bị.
+Thêm hiệu ứng âm thanh cho hành động nhảy và va chạm.
+Chuẩn bị một bản trình bày ngắn gọn về trò chơi, bao gồm các thách thức bạn đã gặp và cách bạn vượt qua chúng.
+Qua mỗi bài thực hành này, bạn sẽ cải thiện kỹ năng Flutter của mình và hiểu sâu hơn về cách tạo ra các hiệu ứng đồ họa và animation trong ứng dụng của mình. Hãy chắc chắn dành thời gian để thử nghiệm và điều chỉnh các bài thực hành để khám phá các khả năng của Flutter.
+
+Dựa trên yêu cầu về việc cung cấp nhiều bài thực hành hơn và chi tiết hơn về Transform, Matrix4, animation, và custom paint trong Flutter, dưới đây là một số bài tập mở rộng với chi tiết cụ thể giúp bạn tăng cường kỹ năng qua từng ngày.
+
+Ngày 1: Animation cơ bản
+Bài thực hành: Animation Fade In và Fade Out cho Logo
+
+Tạo một StatefulWidget chứa logo của bạn.
+Sử dụng AnimationController và Tween để làm mờ logo từ 0 (hoàn toàn trong suốt) đến 1 (hoàn toàn hiển thị), sau đó làm mờ ngược lại.
+Dùng CurvedAnimation để làm cho quá trình animation trở nên mượt mà.
+Ngày 2: Animation nâng cao
+Bài thực hành: Di chuyển Widget theo Đường Zigzag
+
+Vẽ một đường Zigzag sử dụng CustomPaint.
+Tạo một hình vuông nhỏ di chuyển dọc theo đường Zigzag này.
+Sử dụng AnimationController để điều khiển vận tốc và hướng di chuyển.
+Ngày 3: Custom Paint
+Bài thực hành: Vẽ Biểu Đồ Cột
+
+Sử dụng CustomPainter để vẽ một biểu đồ cột đơn giản với dữ liệu cứng.
+Mỗi cột có màu sắc khác nhau.
+Thêm nhãn cho mỗi cột và giá trị số ở đỉnh cột.
+Ngày 4: Transform và Matrix4
+Bài thực hành: Tạo Hình Ảnh Xoay 360 Độ
+
+Sử dụng một widget Image và áp dụng Transform để xoay hình ảnh này 360 độ.
+Tận dụng Matrix4.rotationY để tạo hiệu ứng xoay trục Y.
+Kiểm soát quá trình xoay bằng AnimationController.
+Ngày 5: Kết hợp Animation với Custom Paint và Transform
+Bài thực hành: Vẽ và Animate Một Quả Cầu Bay
+
+Vẽ một quả cầu sử dụng CustomPaint.
+Sử dụng Transform để di chuyển quả cầu qua lại trên màn hình.
+Áp dụng AnimationController để tạo hiệu ứng nảy lên khi chạm vào cạnh màn hình.
+Ngày 6: Phát triển Dự án Mini - Trò chơi Đơn Giản
+Bài thực hành: Xây Dựng Trò Chơi "Tránh Chướng Ngại Vật"
+
+Vẽ chướng ngại vật và nhân vật bằng CustomPaint.
+Sử dụng Transform để di chuyển nhân vật lên/xuống.
+Tạo chướng ngại vật di chuyển ngẫu nhiên từ trên xuống.
+Áp dụng điểm số và kết thúc trò chơi khi nhân vật va chạm vào chướng ngại vật.
+Ngày 7: Hoàn Thiện và Tối Ưu Dự Án
+Bài thực hành: Tối Ưu và Tinh Chỉnh Trò Chơi
+
+Thêm animation cho nhân vật và chướng ngại vật khi xảy ra va chạm.
+Tối ưu hóa hiệu suất bằng cách giảm số lượng các widget và CustomPaint được vẽ lại.
+Thêm màn hình menu và hiển thị điểm số cao nhất.
