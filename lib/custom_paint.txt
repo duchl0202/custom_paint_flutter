@@ -1,0 +1,46 @@
+CUSTOM PAINT FLUTTER
+
+drawRect: Vẽ hình chữ nhật với các góc vuông
+drawRRect: Vẽ hình chữ nhật với các góc bo tròn
+drawDRRect: Vẽ hình chữ nhật với các góc bo tròn và có thể chỉ định bán kính cho mỗi góc
+drawOval: Vẽ hình oval
+drawCircle: Vẽ hình tròn
+drawPath: Vẽ đường path
+drawLine: Vẽ đường thẳng
+drawPoints: Vẽ số điểm
+drawArc: Vẽ cung
+drawImage: Vẽ hình ảnh
+drawImageRect: Vẽ hình ảnh với kích thước cụ thể
+drawImageNine: Vẽ hình ảnh với kích thước cụ thể và chỉ định kích thước cho các cạnh
+drawImageShader: Vẽ hình ảnh với một shader
+drawPicture: Vẽ Picture
+drawParagraph: Vẽ đoạn văn bản
+drawText: Vẽ chuỗi văn bản
+drawTextBlob: Vẽ chuỗi văn bản từ một TextBlob
+drawVertices: Vẽ đỉnh
+drawAtlas: Vẽ atlas
+drawRawAtlas: Vẽ raw atlas
+drawShadow: Vẽ shadow
+
+
+Rect.fromLTRB: Tạo một hình chữ nhật từ bốn giá trị left, top, right, bottom
+Rect.fromCircle: Tạo một hình chữ nhật từ một hình tròn
+Rect.fromCenter: Tạo một hình chữ nhật từ một tâm và kích thước
+Rect.fromLTWH: Tạo một hình chữ nhật từ bốn giá trị left, top, width, height
+Rect.fromPoints: Tạo một hình chữ nhật từ hai điểm
+Rect.largest: Trả về một hình chữ nhật với kích thước lớn nhất
+Rect.zero: Trả về một hình chữ nhật với kích thước 0
+
+
+RRect.fromLTRBR: Tạo một RRect từ bốn giá trị left, top, right, bottom
+RRect.fromRectAndCorners: Tạo một RRect từ một hình chữ nhật và các góc
+RRect.fromRectXY: Tạo một RRect từ một hình chữ nhật và bán kính cho các góc
+RRect.fromLTRBXY: Tạo một RRect từ bốn giá trị left, top, right, bottom và bán kính cho các góc
+RRect.fromRectAndRadius: Tạo một RRect từ một hình chữ nhật và bán kính cho các góc
+RRect.lerp: Tạo một RRect từ hai RRect khác nhau
+RRect.zero: Trả về một RRect với kích thước 0
+
+canvas.drawColor: Vẽ một màu trên canvas
+
+path.shader = Gradient: Background gradient
+path.shader = RadialGradient: Background radial gradient
