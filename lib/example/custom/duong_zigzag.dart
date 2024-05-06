@@ -10,12 +10,12 @@ class DuongZigzagPainter extends CustomPainter {
 
     var path = Path();
     // Điểm bắt đầu
-    path.moveTo(0, size.height * 0.5);
+    path.moveTo(0, size.height * 0.5 + 20);
     // Độ dài của mỗi "zig" và "zag"
-    var width = size.width / 20;
-    var height = 40.0;
+    var width = size.width / 10;
+    var height = 20.0;
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 10; ++i) {
       var x = width * (i + 1);
       var y = size.height * 0.5 + (i % 2 == 0 ? -height : height);
       path.lineTo(x, y);
