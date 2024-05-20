@@ -18,7 +18,7 @@ class _SunSystemState extends State<SunSystem>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 60),
+      duration: const Duration(seconds: 30),
     )..repeat();
   }
 
@@ -34,7 +34,7 @@ class _SunSystemState extends State<SunSystem>
       animation: _controller,
       builder: (context, child) {
         return CustomPaint(
-          painter: SolarSystemPainter(_controller.value * 60),
+          painter: SolarSystemPainter(_controller.value),
           child: Container(),
         );
       },
@@ -42,76 +42,39 @@ class _SunSystemState extends State<SunSystem>
   }
 }
 
-class MasterPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint();
-    paint.strokeWidth = 2;
-    paint.color = Colors.black;
-
-    canvas.drawCircle(Offset.zero, 40, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
-}
-
 class SolarSystemPainter extends CustomPainter {
   final double time;
   SolarSystemPainter(this.time);
 
-  // void drawPlanet(Canvas canvas, Color color, double distanceFromSun,
-  //     double size, double orbitTime, Offset sunPosition, double angleOffset) {
-  //   double angle = time * (2 * math.pi / orbitTime) + angleOffset;
-  //   Offset planetPosition = Offset(
-  //       sunPosition.dx + distanceFromSun * math.cos(angle),
-  //       sunPosition.dy + distanceFromSun * math.sin(angle));
-  //   canvas.drawCircle(planetPosition, size, Paint()..color = color);
-  // }
-
-  void drawMoon(Canvas canvas, Offset planetPosition, double distanceFromPlanet,
-      double size, double orbitTime, double time, Color color) {
-    double angle = time * (2 * pi / orbitTime);
-    Offset moonPosition = Offset(
-        planetPosition.dx + distanceFromPlanet * cos(angle),
-        planetPosition.dy + distanceFromPlanet * sin(angle));
-    canvas.drawCircle(moonPosition, size, Paint()..color = color);
-  }
-
-  void drawPlanet(Canvas canvas, Color color, double distanceFromSun,
-      double size, double orbitTime, Offset sunPosition, double angleOffset) {
-    double angle = time * (2 * pi / orbitTime) + angleOffset;
-    Offset planetPosition = Offset(
-        sunPosition.dx + distanceFromSun * cos(angle),
-        sunPosition.dy + distanceFromSun * sin(angle));
-    canvas.drawCircle(planetPosition, size, Paint()..color = color);
-
-    if (color == Colors.blue) {
-      drawMoon(
-          canvas, planetPosition, 15, 3, 1, time, Colors.grey); // Vẽ Mặt Trăng
-    }
-  }
-
   @override
   void paint(Canvas canvas, Size size) {
     final Offset center = size.center(Offset.zero);
-    final double maxOrbitRadius = min(size.width, size.height) / 3;
 
-    // Draw Sun
+    void drawPlanet(
+        double radian, double speed, double radianPlant, Color color) {
+      double angle = time * 2 * pi * speed;
+      Offset planPositions = Offset(
+        center.dx + radian * (cos(angle)),
+        center.dy + radian * (sin(angle)),
+      );
+      if (color == Color.fromARGB(255, 15, 88, 197)) {
+        double monthRadian = 20;
+        double angleMonth = time * 2 * pi * 100;
+        Offset monthPositions = Offset(
+          planPositions.dx + monthRadian * (cos(angleMonth)),
+          planPositions.dy + monthRadian * (sin(angleMonth)),
+        );
+        canvas.drawCircle(monthPositions, 5, Paint()..color = Colors.grey);
+      }
+      canvas.drawCircle(planPositions, radianPlant, Paint()..color = color);
+    }
+
+    drawPlanet(30, 3, 5, Color.fromARGB(255, 138, 138, 138));
+    drawPlanet(50, 5, 8, Color.fromARGB(255, 230, 128, 32));
+    drawPlanet(80, 8, 13, Color.fromARGB(255, 15, 88, 197));
+    drawPlanet(130, 13, 10, Color.fromARGB(255, 223, 16, 5));
+
     canvas.drawCircle(center, 20, Paint()..color = Colors.yellow);
-
-    // Draw Planets with varying orbitTime to simulate different speeds
-    drawPlanet(
-        canvas, Colors.grey, maxOrbitRadius * 0.2, 5, 3, center, 0); // Mercury
-    drawPlanet(
-        canvas, Colors.orange, maxOrbitRadius * 0.35, 8, 5, center, 1); // Venus
-    drawPlanet(
-        canvas, Colors.blue, maxOrbitRadius * 0.5, 10, 8, center, 2); // Earth
-    drawPlanet(
-        canvas, Colors.red, maxOrbitRadius * 0.65, 7, 13, center, 3); // Mars
-    // Thêm các hành tinh khác nếu muốn
   }
 
   @override

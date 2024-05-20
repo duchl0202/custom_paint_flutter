@@ -1,79 +1,127 @@
-import 'dart:async';
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'dart:math';
 
-class SmoothSecondHandClock extends StatefulWidget {
+import 'package:flutter/scheduler.dart';
+
+class ClockPainter extends CustomPainter {
+  ClockPainter({required this.progress});
+
+  final double progress;
+
   @override
-  _SmoothSecondHandClockState createState() => _SmoothSecondHandClockState();
+  void paint(Canvas canvas, Size size) {
+    final center = size.center(Offset.zero);
+    final radius = min(size.width / 2, size.height / 2);
+    const angleText = 2 * pi / 12;
+    const angle60 = 2 * pi / 60;
+    final paint60 = Paint()..color = Colors.black;
+
+    for (int i = 1; i <= 12; i++) {
+      final x = center.dx + (radius - 34) * cos(angleText * i - pi / 2);
+      final y = center.dy + (radius - 34) * sin(angleText * i - pi / 2);
+      final textSpan = TextSpan(
+        text: i.toString(),
+        style: const TextStyle(
+          fontSize: 32,
+          fontWeight: FontWeight.w600,
+          color: Colors.black,
+        ),
+      );
+
+      final textPainter = TextPainter(
+        text: textSpan,
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr,
+      );
+      textPainter.layout(
+        minWidth: 0,
+        maxWidth: size.width,
+      );
+      final position =
+          Offset(x - textPainter.width / 2, y - textPainter.height / 2);
+
+      textPainter.paint(canvas, position);
+    }
+
+    for (int i = 1; i <= 60; i++) {
+      final x = center.dx + radius * cos(angle60 * i);
+      final y = center.dy + radius * sin(angle60 * i);
+
+      final startX = center.dx + (radius - 10) * cos(angle60 * i);
+      final startY = center.dy + (radius - 10) * sin(angle60 * i);
+
+      final start = Offset(startX, startY);
+      final position = Offset(x, y);
+
+      final isHour = i % 5 == 0;
+
+      paint60.strokeWidth = isHour ? 3 : 1;
+
+      canvas.drawLine(start, position, paint60);
+    }
+    canvas.drawCircle(center, 5, Paint()..style = PaintingStyle.fill);
+
+    final x = center.dx + radius * cos(angle60 * progress - pi / 2);
+    final y = center.dy + radius * sin(angle60 * progress - pi / 2);
+
+    final secondOffset = Offset(x, y);
+    canvas.drawLine(
+      center,
+      secondOffset,
+      Paint()
+        ..strokeWidth = 1
+        ..color = Color.fromARGB(255, 255, 158, 13),
+    );
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _SmoothSecondHandClockState extends State<SmoothSecondHandClock>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  Timer? _timer;
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
+  late Ticker _ticker;
+  double _seconds = 0;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 60),
-    );
-
-    // Cập nhật AnimationController để phản ánh thời gian thực
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _ticker = createTicker((elapsed) {
       final now = DateTime.now();
-      final second = now.second + now.millisecond / 1000.0;
-      _controller.value = second / 60;
-    });
+      setState(() {
+        _seconds = now.second + (now.millisecond / 1000);
+      });
+    })
+      ..start();
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
-    _controller.dispose();
+    _ticker.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return CustomPaint(
-          painter: ClockPainter(_controller.value),
-          size: Size(200, 200),
-        );
-      },
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Flutter Custom Paint')),
+        body: Center(
+          child: CustomPaint(
+            size: Size(300, 300),
+            painter: ClockPainter(
+              progress: _seconds,
+            ),
+          ),
+        ),
+      ),
     );
   }
-}
-
-class ClockPainter extends CustomPainter {
-  final double animationValue;
-  ClockPainter(this.animationValue);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final dateTime = DateTime.now();
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = math.min(size.width / 2, size.height / 2);
-
-    final secondAngle = math.pi * 2 * animationValue;
-    drawHand(
-        canvas, center, secondAngle - math.pi / 2, radius * 0.9, Colors.red, 2);
-  }
-
-  void drawHand(Canvas canvas, Offset center, double angle, double length,
-      Color color, double strokeWidth) {
-    final position = center + Offset(math.cos(angle), math.sin(angle)) * length;
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = strokeWidth
-      ..strokeCap = StrokeCap.round;
-    canvas.drawLine(center, position, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

@@ -27,21 +27,7 @@ class PentagonPainter extends CustomPainter {
       final y = center.dy + radius * sin(angle * i);
       path.lineTo(x, y);
     }
-
     path.close();
-
-    final squareSize = 10.0;
-    final pathMetrics = path.computeMetrics();
-    final pathMetric = pathMetrics.elementAt(0);
-    final tangent =
-        pathMetric.getTangentForOffset(pathMetric.length * progress);
-
-    canvas.drawPath(path, paint);
-    if (tangent != null) {
-      final offset = tangent.position - Offset(squareSize / 2, squareSize / 2);
-      canvas.drawRect(offset & Size(squareSize, squareSize), paint);
-    }
-
     canvas.drawPath(path, paint);
   }
 
