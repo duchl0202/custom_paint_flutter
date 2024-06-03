@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 void main() {
   runApp(MyApp());
@@ -9,94 +8,87 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Resizable & Rotatable Widget'),
-        ),
-        body: Center(
-          child: ResizableRotatableWidget(),
-        ),
-      ),
+      home: PageViewExample(),
     );
   }
 }
 
-class ResizableRotatableWidget extends StatefulWidget {
+class PageViewExample extends StatefulWidget {
   @override
-  _ResizableRotatableWidgetState createState() => _ResizableRotatableWidgetState();
+  _PageViewExampleState createState() => _PageViewExampleState();
 }
 
-class _ResizableRotatableWidgetState extends State<ResizableRotatableWidget> {
-  double _scale = 1.0;
-  double _rotation = 0.0;
-  Offset _initialPosition = Offset.zero;
+class _PageViewExampleState extends State<PageViewExample> {
+  PageController _pageController = PageController();
+  int _selectedIndex = 0;
 
-  void _onPanStart(DragStartDetails details) {
-    _initialPosition = details.globalPosition;
-  }
-
-  void _onPanUpdate(DragUpdateDetails details) {
-    setState(() {
-      Offset currentPosition = details.globalPosition;
-      Offset delta = currentPosition - _initialPosition;
-
-      // Tính toán scale dựa trên độ dài của delta
-      double newScale = 1.0 + delta.distance / 200.0;
-      _scale = newScale < 1.0 ? 1.0 : newScale;
-
-      // Tính toán góc quay dựa trên sự thay đổi theo trục y của delta
-      _rotation = delta.dy / 100.0;
-    });
-  }
+  List<Widget> _pages = List.generate(
+    10,
+    (index) => Center(
+      child: Text(
+        'Page ${index + 1}',
+        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Transform(
-          transform: Matrix4.identity()
-            ..scale(_scale)
-            ..rotateZ(_rotation),
-          alignment: FractionalOffset.center,
-          child: Container(
-            width: 200,
-            height: 200,
-            color: Colors.blue,
-            child: Stack(
-              children: [
-                Center(
-                  child: Text(
-                    'Drag the red box',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: GestureDetector(
-                    onPanStart: _onPanStart,
-                    onPanUpdate: _onPanUpdate,
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      color: Colors.red,
-                      child: Center(
-                        child: Icon(
-                          Icons.open_with,
-                          color: Colors.white,
-                          size: 16,
-                        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('PageView Example'),
+      ),
+      body: Column(
+        children: [
+          Container(
+            height: 100,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: _pages.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                    _pageController.animateToPage(
+                      index,
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: Container(
+                    width: 80,
+                    margin: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: _selectedIndex == index ? Colors.blue : Colors.grey,
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Page ${index + 1}',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
           ),
-        ),
-      ],
+          Expanded(
+            child: PageView(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              children: _pages,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
