@@ -18,12 +18,15 @@ import 'package:flutter_custom_pain/custom_paint/basic/tritager.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/duong_zigzag.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/half_circle_progress.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/half_cirle.dart';
+import 'package:flutter_custom_pain/custom_paint/normal/loading_animation.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/path_morph.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/pentagon.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/tooltip.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/wave_animation.dart';
 import 'package:flutter_custom_pain/gesture_detector/advance/cube_rotating.dart';
+import 'package:flutter_custom_pain/gesture_detector/advance/pump_and_balloon.dart';
 import 'package:flutter_custom_pain/gesture_detector/normal/swip_card.dart';
+import 'package:flutter_custom_pain/main.dart';
 
 enum WidgetType {
   animation,
@@ -199,6 +202,18 @@ final widgets = [
   WidgetModel(
     title: 'CubeRotating',
     widget: CubeRotating(),
+    type: WidgetType.gestureDetector,
+    mode: Mode.advanced,
+  ),
+  WidgetModel(
+    title: 'LoadingAnimationWidget',
+    widget: LoadingAnimationWidget(),
+    type: WidgetType.customPaint,
+    mode: Mode.intermediate,
+  ),
+  WidgetModel(
+    title: 'PumpAndBalloon',
+    widget: PumpAndBalloon(),
     type: WidgetType.gestureDetector,
     mode: Mode.advanced,
   ),

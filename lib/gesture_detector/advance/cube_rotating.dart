@@ -99,11 +99,9 @@ class _RotatingCubeState extends State<RotatingCube> {
 class CubeRotating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('3D Rotating Cube')),
-        body: RotatingCube(),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: Text('3D Rotating Cube')),
+      body: RotatingCube(),
     );
   }
 }
