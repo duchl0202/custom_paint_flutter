@@ -27,10 +27,17 @@ class _RotatingImageState extends State<RotatingImage>
 
   @override
   Widget build(BuildContext context) {
-    return Transform(
-        alignment: Alignment.center,
-        transform: Matrix4.rotationY(_animation.value),
-        child: Text('Xoay 360 độ', style: TextStyle(fontSize: 30)));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Rotating Image'),
+      ),
+      body: Center(
+        child: Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.rotationY(_animation.value),
+            child: Text('Xoay 360 độ', style: TextStyle(fontSize: 30))),
+      ),
+    );
   }
 
   @override
