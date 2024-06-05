@@ -1,5 +1,24 @@
 import 'package:flutter/material.dart';
 
+class SmileyWidget extends StatelessWidget {
+  const SmileyWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Smiley Widget'),
+      ),
+      body: Center(
+        child: CustomPaint(
+          size: const Size(400, 400),
+          painter: SmileyPainter(progress: 0.5),
+        ),
+      ),
+    );
+  }
+}
+
 class SmileyPainter extends CustomPainter {
   SmileyPainter({required this.progress});
 

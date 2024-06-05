@@ -3,11 +3,70 @@ import 'dart:math';
 
 import 'package:flutter/scheduler.dart';
 
+class ClockWidget extends StatefulWidget {
+  const ClockWidget({super.key});
+
+  @override
+  State<ClockWidget> createState() => _ClockWidgetState();
+}
+
+class _ClockWidgetState extends State<ClockWidget>
+    with SingleTickerProviderStateMixin {
+  late Ticker _ticker;
+  double _seconds = 0;
+  double _minutes = 0;
+  double _hours = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _ticker = createTicker((elapsed) {
+      final now = DateTime.now();
+      setState(() {
+        _seconds = now.second + (now.millisecond / 1000);
+        _minutes = now.minute + (_seconds / 60);
+        _hours = now.hour + (_minutes / 60);
+      });
+    })
+      ..start();
+  }
+
+  @override
+  void dispose() {
+    _ticker.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Clock Widget'),
+      ),
+      body: Center(
+        child: CustomPaint(
+          size: const Size(300, 300),
+          painter: ClockPainter(
+            seconds: _seconds,
+            minutes: _minutes,
+            hours: _hours,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class ClockPainter extends CustomPainter {
-  ClockPainter({required this.progress});
+  ClockPainter({
+    required this.seconds,
+    required this.minutes,
+    required this.hours,
+  });
 
-  final double progress;
-
+  final double seconds;
+  final double minutes;
+  final double hours;
   @override
   void paint(Canvas canvas, Size size) {
     final center = size.center(Offset.zero);
@@ -61,8 +120,32 @@ class ClockPainter extends CustomPainter {
     }
     canvas.drawCircle(center, 5, Paint()..style = PaintingStyle.fill);
 
-    final x = center.dx + radius * cos(angle60 * progress - pi / 2);
-    final y = center.dy + radius * sin(angle60 * progress - pi / 2);
+    final minuteAngle = 2 * pi * (minutes / 60) - pi / 2;
+    final minuteX = center.dx + radius * 0.8 * cos(minuteAngle);
+    final minuteY = center.dy + radius * 0.8 * sin(minuteAngle);
+    final minuteOffset = Offset(minuteX, minuteY);
+    canvas.drawLine(
+      center,
+      minuteOffset,
+      Paint()
+        ..strokeWidth = 3
+        ..color = Colors.black,
+    );
+
+    final hourAngle = 2 * pi * (hours / 12) - pi / 2;
+    final hourX = center.dx + radius * 0.5 * cos(hourAngle);
+    final hourY = center.dy + radius * 0.5 * sin(hourAngle);
+    final hourOffset = Offset(hourX, hourY);
+    canvas.drawLine(
+      center,
+      hourOffset,
+      Paint()
+        ..strokeWidth = 5
+        ..color = Colors.black,
+    );
+
+    final x = center.dx + radius * cos(angle60 * seconds - pi / 2);
+    final y = center.dy + radius * sin(angle60 * seconds - pi / 2);
 
     final secondOffset = Offset(x, y);
     canvas.drawLine(
@@ -77,51 +160,5 @@ class ClockPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
-  }
-}
-void main() => runApp(MyApp());
-
-class MyApp extends StatefulWidget {
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
-  late Ticker _ticker;
-  double _seconds = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _ticker = createTicker((elapsed) {
-      final now = DateTime.now();
-      setState(() {
-        _seconds = now.second + (now.millisecond / 1000);
-      });
-    })
-      ..start();
-  }
-
-  @override
-  void dispose() {
-    _ticker.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Flutter Custom Paint')),
-        body: Center(
-          child: CustomPaint(
-            size: Size(300, 300),
-            painter: ClockPainter(
-              progress: _seconds,
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

@@ -1,5 +1,24 @@
 import 'package:flutter/material.dart';
 
+class CloudWidget extends StatelessWidget {
+  const CloudWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cloud Widget'),
+      ),
+      body: Center(
+        child: CustomPaint(
+          size: Size(400, 400),
+          painter: CloudPainter(),
+        ),
+      ),
+    );
+  }
+}
+
 class CloudPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

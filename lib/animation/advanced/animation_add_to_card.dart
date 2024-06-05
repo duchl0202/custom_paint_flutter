@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AnimatedListExample extends StatefulWidget {
+class AnimatedListAddToCard extends StatefulWidget {
   @override
-  _AnimatedListExampleState createState() => _AnimatedListExampleState();
+  _AnimatedListAddToCardState createState() => _AnimatedListAddToCardState();
 }
 
-class _AnimatedListExampleState extends State<AnimatedListExample> {
+class _AnimatedListAddToCardState extends State<AnimatedListAddToCard> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final List<String> _data = List.generate(20, (index) => 'Item $index');
   final Duration _initialDuration = Duration(milliseconds: 300);
@@ -20,7 +20,8 @@ class _AnimatedListExampleState extends State<AnimatedListExample> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _startInitialAnimation());
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _startInitialAnimation());
   }
 
   void _startInitialAnimation() async {
@@ -34,7 +35,8 @@ class _AnimatedListExampleState extends State<AnimatedListExample> {
   void _addItem() {
     final index = _data.length;
     _data.add('Item $index');
-    _listKey.currentState?.insertItem(index, duration: const Duration(milliseconds: 500));
+    _listKey.currentState
+        ?.insertItem(index, duration: const Duration(milliseconds: 500));
   }
 
   void _removeItem(int index) {
@@ -50,7 +52,8 @@ class _AnimatedListExampleState extends State<AnimatedListExample> {
     final renderBox = itemKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox != null) {
       _startPosition = renderBox.localToGlobal(Offset.zero);
-      final cartIconBox = _cartKey.currentContext?.findRenderObject() as RenderBox?;
+      final cartIconBox =
+          _cartKey.currentContext?.findRenderObject() as RenderBox?;
       if (cartIconBox != null) {
         _endPosition = cartIconBox.localToGlobal(Offset.zero);
         _createOverlayEntry();
@@ -75,7 +78,8 @@ class _AnimatedListExampleState extends State<AnimatedListExample> {
     Overlay.of(context)?.insert(_overlayEntry!);
   }
 
-  Widget _buildItem(BuildContext context, String item, Animation<double> animation) {
+  Widget _buildItem(
+      BuildContext context, String item, Animation<double> animation) {
     final itemKey = GlobalKey();
     return SizeTransition(
       sizeFactor: animation,
@@ -100,7 +104,7 @@ class _AnimatedListExampleState extends State<AnimatedListExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Animated List Example'),
+        title: Text('Animated add to cart example'),
         actions: [
           Icon(Icons.shopping_cart, key: _cartKey),
           SizedBox(width: 16),
@@ -136,7 +140,8 @@ class AddToCartAnimation extends StatefulWidget {
   _AddToCartAnimationState createState() => _AddToCartAnimationState();
 }
 
-class _AddToCartAnimationState extends State<AddToCartAnimation> with SingleTickerProviderStateMixin {
+class _AddToCartAnimationState extends State<AddToCartAnimation>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _animation;
 

@@ -58,16 +58,13 @@ class WavePainter extends CustomPainter {
 
     path.moveTo(0, size.height / 2);
 
-    for (double i = 0; i <= waveLength; i++) {
-      path.lineTo(
-        i,
-        size.height / 2 +
-            waveHeight * sin((i / waveLength * 2 * pi) + wavePhase * 2 * pi),
-      );
+    for (double i = 0; i < waveLength; i++) {
+      final y = size.height / 2 +
+          waveHeight * (sin((i / waveLength * 2 * pi) + (wavePhase * 2 * pi)));
+      path.lineTo(i, y);
     }
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
-    path.close();
     canvas.drawPath(path, paint);
   }
 

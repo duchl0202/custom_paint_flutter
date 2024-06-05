@@ -2,12 +2,12 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-class BallPage extends StatefulWidget {
+class QuaCauBayVaNayLen extends StatefulWidget {
   @override
-  _BallPageState createState() => _BallPageState();
+  _QuaCauBayVaNayLenState createState() => _QuaCauBayVaNayLenState();
 }
 
-class _BallPageState extends State<BallPage>
+class _QuaCauBayVaNayLenState extends State<QuaCauBayVaNayLen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -18,9 +18,9 @@ class _BallPageState extends State<BallPage>
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
-    )..repeat(reverse: false);
-    _animation = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: _controller, curve: Curves.easeInOutCubic))
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0, end: 1)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.bounceIn))
       ..addListener(() {
         setState(() {});
       });
@@ -28,15 +28,30 @@ class _BallPageState extends State<BallPage>
 
   @override
   Widget build(BuildContext context) {
-    double maxHeight = MediaQuery.of(context).size.height - 150;
-    return Transform.translate(
-      offset: Offset(0, _animation.value * maxHeight),
-      child: CustomPaint(
-        painter: BallPainter(),
-        child: Container(
-          width: 50,
-          height: 50,
-        ),
+    double maxHeight = -MediaQuery.of(context).size.height / 2 - 150;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Quả cầu bay và nẩy lên'),
+      ),
+      body: Column(
+        children: [
+          Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Transform.translate(
+                offset: Offset(0, _animation.value * maxHeight),
+                child: CustomPaint(
+                  painter: BallPainter(),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

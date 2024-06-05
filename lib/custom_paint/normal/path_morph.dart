@@ -1,7 +1,55 @@
 import 'dart:ui' as ui;
 
-
 import 'package:flutter/material.dart';
+
+class PathMorphWidget extends StatefulWidget {
+  const PathMorphWidget({Key? key}) : super(key: key);
+
+  @override
+  State<PathMorphWidget> createState() => _PathMorphWidgetState();
+}
+
+class _PathMorphWidgetState extends State<PathMorphWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  @override
+  void initState() {
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat(reverse: true);
+
+    animation = Tween<double>(begin: 0.0, end: 1.0).animate(controller);
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Path Morph Widget'),
+      ),
+      body: Center(
+        child: CustomPaint(
+          size: const Size(200, 200),
+          painter: PathMorphPainter(animation.value),
+        ),
+      ),
+    );
+  }
+}
 
 class PathMorphPainter extends CustomPainter {
   final double progress;

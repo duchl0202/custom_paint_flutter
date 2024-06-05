@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class SunSystem extends StatefulWidget {
-  const SunSystem({super.key});
+class SunSystemWidget extends StatefulWidget {
+  const SunSystemWidget({super.key});
 
   @override
-  State<SunSystem> createState() => _SunSystemState();
+  State<SunSystemWidget> createState() => _SunSystemWidgetState();
 }
 
-class _SunSystemState extends State<SunSystem>
+class _SunSystemWidgetState extends State<SunSystemWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
@@ -18,7 +18,7 @@ class _SunSystemState extends State<SunSystem>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 30),
+      duration: const Duration(seconds: 60),
     )..repeat();
   }
 
@@ -30,14 +30,17 @@ class _SunSystemState extends State<SunSystem>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return CustomPaint(
-          painter: SolarSystemPainter(_controller.value),
-          child: Container(),
-        );
-      },
+    return Scaffold(
+      appBar: AppBar(title: const Text('Sun System')),
+      body: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return CustomPaint(
+            painter: SolarSystemPainter(_controller.value),
+            child: Container(),
+          );
+        },
+      ),
     );
   }
 }

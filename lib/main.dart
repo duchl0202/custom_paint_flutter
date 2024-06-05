@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_pain/model.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,76 +19,98 @@ class PageViewExample extends StatefulWidget {
   _PageViewExampleState createState() => _PageViewExampleState();
 }
 
-class _PageViewExampleState extends State<PageViewExample> {
-  PageController _pageController = PageController();
-  int _selectedIndex = 0;
+class _PageViewExampleState extends State<PageViewExample>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+  List<WidgetModel> _pages = [...widgets];
+  WidgetType? _selectedType;
+  Mode? _selectedMode;
 
-  List<Widget> _pages = List.generate(
-    10,
-    (index) => Center(
-      child: Text(
-        'Page ${index + 1}',
-        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-      ),
-    ),
-  );
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: _pages.length, vsync: this);
+  }
+
+  void _filterPages() {
+    setState(() {
+      _pages = widgets.where((page) {
+        if (_selectedType != null && page.type != _selectedType) {
+          return false;
+        }
+        if (_selectedMode != null && page.mode != _selectedMode) {
+          return false;
+        }
+        return true;
+      }).toList();
+      _tabController = TabController(length: _pages.length, vsync: this);
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PageView Example'),
+        titleSpacing: 0,
+        title: Text('Flutter Interactive Examples'),
+        bottom: TabBar(
+          controller: _tabController,
+          isScrollable: true,
+          tabs: _pages.map((page) {
+            return Tab(text: page.title.split('Widget')[0]);
+          }).toList(),
+        ),
       ),
-      body: Column(
-        children: [
-          Container(
-            height: 100,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _pages.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedIndex = index;
-                    });
-                    _pageController.animateToPage(
-                      index,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  child: Container(
-                    width: 80,
-                    margin: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: _selectedIndex == index ? Colors.blue : Colors.grey,
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Page ${index + 1}',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                );
-              },
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Filter Options'),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
             ),
-          ),
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
+            ...WidgetType.values.map((type) {
+              return ExpansionTile(
+                title: Text(type.toString().split('.').last),
+                children: Mode.values.map((mode) {
+                  return ListTile(
+                    title: Text(mode.toString().split('.').last),
+                    onTap: () {
+                      setState(() {
+                        _selectedType = type;
+                        _selectedMode = mode;
+                        _filterPages();
+                        Navigator.pop(context); // Đóng Drawer sau khi chọn
+                      });
+                    },
+                  );
+                }).toList(),
+              );
+            }).toList(),
+            ListTile(
+              title: Text('Clear Filters'),
+              onTap: () {
                 setState(() {
-                  _selectedIndex = index;
+                  _selectedType = null;
+                  _selectedMode = null;
+                  _filterPages();
+                  Navigator.pop(context); // Đóng Drawer sau khi chọn
                 });
               },
-              children: _pages,
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: _pages.map((e) => e.widget).toList(),
       ),
     );
   }

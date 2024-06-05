@@ -9,7 +9,7 @@ class _SwipeCardDemoState extends State<SwipeCardDemo> {
   List<String> cards = ["Card 1", "Card 2", "Card 3", "Card 4"].reversed.toList();
   Offset cardOffset = Offset.zero;
   double rotationAngle = 0.0;
-  int cardCount = 4;
+  int cardCount = 4; 
 
   void _onPanUpdate(DragUpdateDetails details) {
     setState(() {
@@ -37,25 +37,30 @@ class _SwipeCardDemoState extends State<SwipeCardDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Stack(
-        children: cards.asMap().entries.map((entry) {
-          int index = entry.key;
-          String card = entry.value;
-          return Positioned(
-            top: 50.0 + index * 10,
-            left: 20.0 + index * 10,
-            child: index == cards.length - 1
-                ? DraggableCard(
-                    card: card,
-                    onPanUpdate: _onPanUpdate,
-                    onPanEnd: _onPanEnd,
-                    cardOffset: cardOffset,
-                    rotationAngle: rotationAngle,
-                  )
-                : StaticCard(card: card),
-          );
-        }).toList(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Swipe Card Demo'),
+      ),
+      body: Center(
+        child: Stack(
+          children: cards.asMap().entries.map((entry) {
+            int index = entry.key;
+            String card = entry.value;
+            return Positioned(
+              top: 50.0 + index * 10,
+              left: 20.0 + index * 10,
+              child: index == cards.length - 1
+                  ? DraggableCard(
+                      card: card,
+                      onPanUpdate: _onPanUpdate,
+                      onPanEnd: _onPanEnd,
+                      cardOffset: cardOffset,
+                      rotationAngle: rotationAngle,
+                    )
+                  : StaticCard(card: card),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

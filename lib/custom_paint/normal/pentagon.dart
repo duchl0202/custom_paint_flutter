@@ -1,6 +1,25 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+class PentagonWidget extends StatelessWidget {
+  const PentagonWidget({Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Pentagon Widget'),
+      ),
+      body: Center(
+        child: CustomPaint(
+          size: Size(400, 400),
+          painter: PentagonPainter(progress: 0.5),
+        ),
+      ),
+    );
+  }
+}
+
 class PentagonPainter extends CustomPainter {
   PentagonPainter({required this.progress});
   final double progress;
@@ -18,13 +37,13 @@ class PentagonPainter extends CustomPainter {
 
     final Path path = Path();
 
-    final Offset startPosition =
-        center + Offset(radius * cos(0), radius * sin(0));
-    path.moveTo(startPosition.dx, startPosition.dy);
+    final Offset startPath =
+        Offset(radius * cos(0) + center.dx, radius * sin(0) + center.dy);
+    path.moveTo(startPath.dx, startPath.dy);
 
-    for (int i = 1; i <= side; i++) {
-      final x = center.dx + radius * cos(angle * i);
-      final y = center.dy + radius * sin(angle * i);
+    for (var i = 0; i <= side; i++) {
+      final x = center.dx + radius * cos(i * angle);
+      final y = center.dy + radius * sin(i * angle);
       path.lineTo(x, y);
     }
     path.close();
