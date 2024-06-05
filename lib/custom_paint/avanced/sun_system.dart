@@ -31,6 +31,7 @@ class _SunSystemWidgetState extends State<SunSystemWidget>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(title: const Text('Sun System')),
       body: AnimatedBuilder(
         animation: _controller,

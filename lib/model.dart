@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_pain/animation/advanced/animation_add_to_card.dart';
+import 'package:flutter_custom_pain/animation/basic/multiple_ticker.dart';
 import 'package:flutter_custom_pain/animation/basic/qua_cau_bay_va_nay_len.dart';
+import 'package:flutter_custom_pain/animation/basic/rotate_transiton.dart';
+import 'package:flutter_custom_pain/animation/basic/sequence_animation.dart';
+import 'package:flutter_custom_pain/animation/basic/tween_animation_example.dart';
 import 'package:flutter_custom_pain/animation/basic/xoay_item_260_do.dart';
 import 'package:flutter_custom_pain/animation/nomal/animation_counter.dart';
 import 'package:flutter_custom_pain/animation/nomal/animation_load_listview.dart';
@@ -18,11 +22,13 @@ import 'package:flutter_custom_pain/custom_paint/basic/tritager.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/duong_zigzag.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/half_circle_progress.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/half_cirle.dart';
+import 'package:flutter_custom_pain/custom_paint/normal/loading_animation.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/path_morph.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/pentagon.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/tooltip.dart';
 import 'package:flutter_custom_pain/custom_paint/normal/wave_animation.dart';
 import 'package:flutter_custom_pain/gesture_detector/advance/cube_rotating.dart';
+import 'package:flutter_custom_pain/gesture_detector/advance/pump_and_balloon.dart';
 import 'package:flutter_custom_pain/gesture_detector/normal/swip_card.dart';
 
 enum WidgetType {
@@ -201,5 +207,41 @@ final widgets = [
     widget: CubeRotating(),
     type: WidgetType.gestureDetector,
     mode: Mode.advanced,
+  ),
+  WidgetModel(
+    title: 'LoadingAnimationWidget',
+    widget: LoadingAnimationWidget(),
+    type: WidgetType.customPaint,
+    mode: Mode.intermediate,
+  ),
+  WidgetModel(
+    title: 'PumpAndBalloon',
+    widget: PumpAndBalloon(),
+    type: WidgetType.gestureDetector,
+    mode: Mode.advanced,
+  ),
+  WidgetModel(
+    title: 'TweenAnimation',
+    widget: TweenAnimationExample(),
+    type: WidgetType.animation,
+    mode: Mode.basic,
+  ),
+  WidgetModel(
+    title: 'SequenceAnimation',
+    widget: SequenceAnimationExample(),
+    type: WidgetType.animation,
+    mode: Mode.basic,
+  ),
+  WidgetModel(
+    title: 'RotateTransition',
+    widget: RotateTransitionExample(),
+    type: WidgetType.animation,
+    mode: Mode.basic,
+  ),
+  WidgetModel(
+    title: 'MultipleTicker',
+    widget: MultipleTicker(),
+    type: WidgetType.animation,
+    mode: Mode.basic,
   ),
 ];
