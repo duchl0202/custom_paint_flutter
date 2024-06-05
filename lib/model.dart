@@ -30,6 +30,7 @@ import 'package:flutter_custom_pain/custom_paint/normal/wave_animation.dart';
 import 'package:flutter_custom_pain/gesture_detector/advance/cube_rotating.dart';
 import 'package:flutter_custom_pain/gesture_detector/advance/pump_and_balloon.dart';
 import 'package:flutter_custom_pain/gesture_detector/normal/swip_card.dart';
+import 'package:flutter_custom_pain/main.dart';
 
 enum WidgetType {
   animation,
