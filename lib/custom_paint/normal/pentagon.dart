@@ -13,7 +13,7 @@ class PentagonWidget extends StatelessWidget {
       body: Center(
         child: CustomPaint(
           size: Size(400, 400),
-          painter: PentagonPainter(progress: 0.5),
+          painter: PentagonPainter(),
         ),
       ),
     );
@@ -21,8 +21,7 @@ class PentagonWidget extends StatelessWidget {
 }
 
 class PentagonPainter extends CustomPainter {
-  PentagonPainter({required this.progress});
-  final double progress;
+  PentagonPainter();
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
@@ -42,8 +41,11 @@ class PentagonPainter extends CustomPainter {
     path.moveTo(startPath.dx, startPath.dy);
 
     for (var i = 0; i <= side; i++) {
-      final x = center.dx + radius * cos(i * angle);
-      final y = center.dy + radius * sin(i * angle);
+      double x = center.dx + radius * cos(i * angle);
+      double y = center.dy + radius * sin(i * angle);
+      path.lineTo(x, y);
+      x = center.dx + radius / 2.5 * cos(angle * i + angle / 2);
+      y = center.dy + radius / 2.5 * sin(angle * i + angle / 2);
       path.lineTo(x, y);
     }
     path.close();
