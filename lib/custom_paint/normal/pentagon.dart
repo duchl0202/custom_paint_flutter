@@ -36,16 +36,13 @@ class PentagonPainter extends CustomPainter {
 
     final Path path = Path();
 
-    final Offset startPath =
-        Offset(radius * cos(0) + center.dx, radius * sin(0) + center.dy);
+    final Offset startPath = Offset(radius * cos(0 - pi / 2) + center.dx,
+        radius * sin(0 - pi / 2) + center.dy);
     path.moveTo(startPath.dx, startPath.dy);
 
     for (var i = 0; i <= side; i++) {
-      double x = center.dx + radius * cos(i * angle);
-      double y = center.dy + radius * sin(i * angle);
-      path.lineTo(x, y);
-      x = center.dx + radius / 2.5 * cos(angle * i + angle / 2);
-      y = center.dy + radius / 2.5 * sin(angle * i + angle / 2);
+      double x = center.dx + radius * cos(i * angle - pi / 2);
+      double y = center.dy + radius * sin(i * angle - pi / 2);
       path.lineTo(x, y);
     }
     path.close();

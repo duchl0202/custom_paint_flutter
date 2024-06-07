@@ -11,6 +11,7 @@ class PumpAndBalloon extends StatefulWidget {
 class _PumpAndBalloonState extends State<PumpAndBalloon>
     with SingleTickerProviderStateMixin {
   double _balloonSize = 100;
+  double _currentWidth = 100;
   double _pumpHandlePosition = 0;
   bool _isPopped = false;
   late AnimationController _controller;
@@ -33,6 +34,7 @@ class _PumpAndBalloonState extends State<PumpAndBalloon>
         setState(() {
           _isPopped = false;
           _balloonSize = 100;
+          _currentWidth = 100;
           _pumpHandlePosition = 0;
         });
         _controller.reset();
@@ -48,7 +50,10 @@ class _PumpAndBalloonState extends State<PumpAndBalloon>
       if (_pumpHandlePosition < 0) {
         _pumpHandlePosition = 0;
       } else {
-        _balloonSize += details.delta.dy;
+        if (details.delta.dy > 0) {
+          _balloonSize += details.delta.dy;
+        }
+        _currentWidth += details.delta.dy;
       }
       if (_balloonSize >= MediaQuery.of(context).size.width * 0.75) {
         _isPopped = true;
@@ -103,7 +108,7 @@ class _PumpAndBalloonState extends State<PumpAndBalloon>
                   bottom: 100,
                   child: Container(
                     width: 5,
-                    height: (200 - _balloonSize).clamp(0, 1000),
+                    height: (200 - _currentWidth).clamp(0, 1000),
                     color: Colors.black,
                   ),
                 ),
