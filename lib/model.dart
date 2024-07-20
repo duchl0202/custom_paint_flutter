@@ -4,6 +4,7 @@ import 'package:flutter_custom_pain/animation/basic/multiple_ticker.dart';
 import 'package:flutter_custom_pain/animation/basic/qua_cau_bay_va_nay_len.dart';
 import 'package:flutter_custom_pain/animation/basic/rotate_transiton.dart';
 import 'package:flutter_custom_pain/animation/basic/sequence_animation.dart';
+import 'package:flutter_custom_pain/animation/basic/square_loading_animation.dart';
 import 'package:flutter_custom_pain/animation/basic/tween_animation_example.dart';
 import 'package:flutter_custom_pain/animation/basic/xoay_item_260_do.dart';
 import 'package:flutter_custom_pain/animation/nomal/animation_counter.dart';
@@ -244,5 +245,11 @@ final widgets = [
     widget: MultipleTicker(),
     type: WidgetType.animation,
     mode: Mode.basic,
+  ),
+  WidgetModel(
+    title: 'Square Loading Animation',
+    widget: SquareLoadingAnimation(),
+    type: WidgetType.animation,
+    mode: Mode.intermediate,
   ),
 ];
