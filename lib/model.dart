@@ -9,6 +9,7 @@ import 'package:flutter_custom_pain/animation/basic/tween_animation_example.dart
 import 'package:flutter_custom_pain/animation/basic/xoay_item_260_do.dart';
 import 'package:flutter_custom_pain/animation/nomal/animation_counter.dart';
 import 'package:flutter_custom_pain/animation/nomal/animation_load_listview.dart';
+import 'package:flutter_custom_pain/animation/nomal/bam_vao_mo_ra.dart';
 import 'package:flutter_custom_pain/custom_paint/avanced/clock.dart';
 import 'package:flutter_custom_pain/custom_paint/avanced/sun_system.dart';
 import 'package:flutter_custom_pain/custom_paint/basic/circle.dart';
@@ -249,6 +250,12 @@ final widgets = [
   WidgetModel(
     title: 'Square Loading Animation',
     widget: SquareLoadingAnimation(),
+    type: WidgetType.animation,
+    mode: Mode.intermediate,
+  ),
+  WidgetModel(
+    title: 'Bấm vào mở ra',
+    widget: BamVaoMoRa(),
     type: WidgetType.animation,
     mode: Mode.intermediate,
   ),
