@@ -10,6 +10,7 @@ import 'package:flutter_custom_pain/animation/basic/xoay_item_260_do.dart';
 import 'package:flutter_custom_pain/animation/nomal/animation_counter.dart';
 import 'package:flutter_custom_pain/animation/nomal/animation_load_listview.dart';
 import 'package:flutter_custom_pain/animation/nomal/bam_vao_mo_ra.dart';
+import 'package:flutter_custom_pain/animation/nomal/interaction_button.dart';
 import 'package:flutter_custom_pain/custom_paint/avanced/clock.dart';
 import 'package:flutter_custom_pain/custom_paint/avanced/sun_system.dart';
 import 'package:flutter_custom_pain/custom_paint/basic/circle.dart';
@@ -32,7 +33,6 @@ import 'package:flutter_custom_pain/custom_paint/normal/wave_animation.dart';
 import 'package:flutter_custom_pain/gesture_detector/advance/cube_rotating.dart';
 import 'package:flutter_custom_pain/gesture_detector/advance/pump_and_balloon.dart';
 import 'package:flutter_custom_pain/gesture_detector/normal/swip_card.dart';
-import 'package:flutter_custom_pain/main.dart';
 
 enum WidgetType {
   animation,
@@ -256,6 +256,12 @@ final widgets = [
   WidgetModel(
     title: 'Bấm vào mở ra',
     widget: BamVaoMoRa(),
+    type: WidgetType.animation,
+    mode: Mode.intermediate,
+  ),
+  WidgetModel(
+    title: 'Hiệu ứng Gradient Button',
+    widget: InteractionButton(),
     type: WidgetType.animation,
     mode: Mode.intermediate,
   ),
